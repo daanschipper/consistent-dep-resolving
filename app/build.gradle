@@ -19,8 +19,8 @@ dependencies {
     implementation platform(project(':platform'))
 
     // a dependency on Jackson Databind
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+    implementation libs.jackson.databind
 
     // and a dependency on vert.x
-    implementation 'io.vertx:vertx-core:3.5.3'
+    implementation libs.vertx.core
 }
