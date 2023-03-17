@@ -1,0 +1,10 @@
+plugins {
+    id 'java-platform'
+}
+
+dependencies {
+    constraints {
+        api 'com.fasterxml.jackson.core:jackson-core:2.8.9'
+        api 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+    }
+}

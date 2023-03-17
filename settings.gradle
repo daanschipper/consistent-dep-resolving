@@ -1,0 +1,4 @@
+rootProject.name = 'consistent-dep-resolving'
+
+include(':app')
+include(':platform')

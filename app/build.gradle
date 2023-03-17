@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+    }
+}
+
+dependencies {
+    implementation platform(project(':platform'))
+
+    // a dependency on Jackson Databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+
+    // and a dependency on vert.x
+    implementation 'io.vertx:vertx-core:3.5.3'
+}
