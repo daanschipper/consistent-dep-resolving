@@ -4,7 +4,15 @@ plugins {
 
 dependencies {
     constraints {
-        api libs.jackson.core
-        api libs.jackson.databind
+        api(libs.jackson.core) {
+            version {
+                strictly '2.8.9'
+            }
+        }
+        api(libs.jackson.databind) {
+            version {
+                strictly '2.8.9'
+            }
+        }
     }
 }
