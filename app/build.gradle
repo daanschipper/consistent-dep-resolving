@@ -12,6 +12,7 @@ repositories {
 configurations.all {
     resolutionStrategy {
         failOnVersionConflict()
+        failOnNonReproducibleResolution()
     }
 }
 
