@@ -1,6 +1,6 @@
 [versions]
-jackson = { strictly = "2.8.9" }
-vertx = { strictly = "3.5.3" }
+jackson = "2.8.9"
+vertx = "3.5.3"
 
 [libraries]
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }

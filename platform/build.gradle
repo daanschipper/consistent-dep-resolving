@@ -2,9 +2,19 @@ plugins {
     id 'java-platform'
 }
 
+def versionCatalogName = "libs"
+def versionCatalog = extensions.getByType(VersionCatalogsExtension).named(versionCatalogName)
+
 dependencies {
     constraints {
-        api libs.jackson.core
-        api libs.jackson.databind
+        versionCatalog.getLibraryAliases().each { String alias ->
+            versionCatalog.findLibrary(alias).ifPresent(library -> {
+                api(library) {
+                    version {
+                        strictly "${library.get().getVersionConstraint().getRequiredVersion()}"
+                    }
+                }
+            })
+        }
     }
 }
