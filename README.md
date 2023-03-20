@@ -1,21 +1,23 @@
-Example to have the same version resolved across all configurations for a multi-project build using the version catalog!
+Example showing consistent dependency version resolving across all configurations for a multi-project build using the version catalog!
 
+The two dependencies `com.fasterxml.jackson.core:jackson-databind:2.8.9` and `io.vertx:vertx-core:3.5.3` lead to a version conflict as `vertx` transitively depends on `jackson-databind:2.9.5`.   
+However, Gradle would actually resolve the following dependency versions:
+* `jackson-core` version `2.9.5` (brought by `vertx-core`)
+* `jackson-databind` version `2.9.5` (by conflict resolution)
+* `jackson-annotation` version `2.9.0` (dependency of `jackson-databind:2.9.5)
 
-This repository combines several guides into one example
+This leads to the following issues
+* Confusion as to which version is actually used, one might expect version `2.8.9` for `jackson-databind` is used, but it is actually `2.9.5`. 
+* Different versions can be resolved for the `compileClasspath` and `runtimeClasspath`.
+
+This repository combines several guides into one example to showcase consistent dependency version resolving:
 * [Aligning dependency versions](https://docs.gradle.org/current/userguide/dependency_version_alignment.html#version_alignment)
 * [Sharing dependency versions between projects](https://docs.gradle.org/current/userguide/platforms.html)
 * [Declaring Rich Versions](https://docs.gradle.org/current/userguide/rich_versions.html)
 * [Preventing accidental dependency upgrades](https://docs.gradle.org/current/userguide/resolution_strategy_tuning.html)
 
-
 ## Failing on version conflict
-The `:app` project adds two dependencies `jackson` and `vertx` leading to a version conflict. There’s a version conflict whenever Gradle finds the same module in two different versions in a dependency graph.
-Gradle would actually resolve the following dependency versions:
-* jackson-core version 2.9.5 (brought by vertx-core)
-* jackson-databind version 2.9.5 (by conflict resolution)
-* jackson-annotation version 2.9.0 (dependency of jackson-databind:2.9.5)
-
-By default, Gradle performs optimistic upgrades, meaning that if version 2.8.9 and 2.9.5 are found in the graph, we resolve to the highest version, 2.9.5. 
+By default, Gradle performs optimistic upgrades, meaning that if version 2.8.9 and 2.9.5 of the same library are found in the graph, we resolve to the highest version, 2.9.5. 
 By adding `failOnVersionConflict()` with the following snippet Gradle will fail the build to be made aware of the version conflict.
 
 ```groovy
@@ -32,8 +34,6 @@ Gradle will then fail with the following error as different versions of `jackson
   - com.fasterxml.jackson.core:jackson-core between versions 2.9.5 and 2.8.9
   - com.fasterxml.jackson.core:jackson-databind between versions 2.9.5 and 2.8.9
 ```
-
-
 
 ## Version catalog
 A version catalog is a list of dependencies, represented as dependency coordinates, that a user can pick from when declaring dependencies in a build script. This example uses the TOML format, but you can also choose to define it in the `settings.gradle`, for more information see [Central declaration of dependencies](https://docs.gradle.org/current/userguide/platforms.html#sub:central-declaration-of-dependencies).
