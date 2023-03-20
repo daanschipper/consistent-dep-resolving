@@ -19,9 +19,6 @@ configurations.all {
 dependencies {
     implementation platform(project(':platform'))
 
-    // a dependency on Jackson Databind
-    implementation libs.jackson.databind
-
-    // and a dependency on vert.x
+    implementation project(":lib")
     implementation libs.vertx.core
 }
